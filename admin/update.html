@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Medicine</title>
+  <link href="css/login.css" rel="stylesheet" />
+  <link href="css/style.css" rel="stylesheet" />
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = "login.html";
+        }
+    });
+</script>
+
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">Update Medicine</h2>
+    <div class="heading-border"></div>
+  <form id="updateForm" class="form">
+<fieldset>
+    <input type="hidden" id="medicineId">
+  
+      <p class="label">Medicine Name</p>
+      <input type="text" id="medicineName" name="MedicineName" required>
+   
+      <p class="label">Price</p>
+      <input type="number" id="price" name="Price" required>
+    
+    
+      <p class="label">Image</p>
+      <input type="file" id="image" name="Image">
+   
+    <button type="submit" class="btn-primary">Update Medicine</button>
+</fieldset>
+  </form>
+</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const medicineId = params.get('id');
+      
+      fetchMedicineDetails(medicineId);
+    });
+
+    function fetchMedicineDetails(id) {
+      fetch(`http://localhost:5000/api/medicine/${id}`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('medicineId').value = data._id;
+          document.getElementById('medicineName').value = data.MedicineName;
+          document.getElementById('price').value = data.Price;
+        })
+        .catch(error => console.error("Error fetching medicine details:", error));
+    }
+
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('medicineId').value;
+      const medicineName = document.getElementById('medicineName').value;
+      const price = document.getElementById('price').value;
+      const formData = new FormData();
+      formData.append('MedicineName', medicineName);
+      formData.append('Price', price);
+      const imageFile = document.getElementById('image').files[0];
+      if (imageFile) {
+        formData.append('Image', imageFile);
+      }
+
+      fetch(`http://localhost:5000/api/medicine/${id}`, {
+        method: 'PUT',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(() => {
+        alert('Medicine updated successfully!');
+        window.location.href = 'index.html'; 
+      })
+      .catch(error => console.error('Error updating medicine:', error));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Medicine</title>
+
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700|Roboto:400,700&display=swap" rel="stylesheet">
+
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="css/login.css" rel="stylesheet" />
+
+
+  <link href="css/responsive.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = "login.html";
+        }
+    });
+</script>
+</head>
+
+<body class="sub_page">
+  <div class="hero_area">
+
+    <header class="header_section">
+
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              Medicine
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+              </ul>
+      
+              <div class="login_btn-contanier ml-0 ml-lg-5">
+                <a  href="#" id="logout-btn">
+                  <img src="images/user.png" alt="">
+                  <span>
+                    Logout
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </nav>
+      </div>
+    </header>
+   
+  </div>
+
+
+ <section class="login">
+    <div class="container">
+        <h2 class="text-center">Order Medicine</h2>
+        <div class="heading-border"></div>
+
+        <form id="order" class="form">
+            <fieldset>
+                <legend>Order</legend>
+
+                <p class="label">Medicine Name</p>
+                <input type="text" id="medicineName" name="medicineName" required>
+            
+                <p class="label">Price</p>
+                <input type="tel" id="price" name="price" required>
+
+                <p class="label">Image</p>
+                <input type="File" id="address" name="address" required>
+
+                <button type="submit" class="btn-primary">Add</button>
+                
+            </fieldset>
+        </form>
+        
+    </div>
+</section>
+
+<section class="health_section layout_padding">
+  <div class="health_carousel-container">
+    <h2 class="text-uppercase">Vitamins & Supplements</h2>
+    <div class="carousel-wrap layout_padding2">
+      <div class="owl-carousel owl-2" id="medicineContainer">
+       
+      </div>
+    </div>
+  </div>
+</section>
+
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="info_contact">
+            <h4>
+              Contact
+            </h4>
+            <div class="box">
+              <div class="img-box">
+                <img src="images/telephone-symbol-button.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  +01 123567894
+                </h6>
+              </div>
+            </div>
+            <div class="box">
+              <div class="img-box">
+                <img src="images/email.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h6>
+                  demo@gmail
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="info_menu">
+            <h4>
+              Menu
+            </h4>
+            <ul class="navbar-nav  ">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html"> About </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="medicine.html"> Medicine </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="buy.html"> Online Buy </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="info_news">
+            <h4>
+              newsletter
+            </h4>
+            <form id="subscribeForm">
+              <input type="email" id="email" placeholder="Enter Your Email" required>
+              <div class="d-flex justify-content-center justify-content-md-end mt-3">
+                  <button type="submit">Subscribe</button>
+              </div>
+          </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-fluid footer_section">
+   
+  </section>
+ 
+
+  <!-- <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
+  </script>
+
+  <!-- Include Owl Carousel CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 2
+        },
+        1000: {
+          items: 4
+        }
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    $(".owl-2").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 2
+        },
+        1000: {
+          items: 4
+        }
+      }
+    });
+  </script>
+
+<script>
+  document.getElementById('order').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append('MedicineName', document.getElementById('medicineName').value);
+    formData.append('Price', document.getElementById('price').value);
+    const fileInput = document.getElementById('address');
+    if (fileInput.files.length > 0) {
+        formData.append('Image', fileInput.files[0]);
+    }
+
+    try {
+        const response = await axios.post('http://localhost:5000/api/medicine', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Medicine added successfully!'
+        });
+        document.getElementById('order').reset();
+    } catch (error) {
+        console.error('Error:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Failed to add medicine. Please try again!'
+        });
+    }
+});
+
+</script>
+<script>
+  const logoutBtn = document.getElementById('logout-btn');
+  logoutBtn.addEventListener('click', async function (event) {
+  event.preventDefault();
+
+try {
+  const response = await fetch('http://localhost:5000/api/logout', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
+
+  const data = await response.json();
+  console.log(data.message);
+  localStorage.removeItem('token');
+  localStorage.removeItem('isLoggedIn');
+
+  // alert('Logout successful!');
+  console.log('Logout successful!');
+  window.location.href = 'login.html';
+} catch (error) {
+  console.error('Logout failed', error);
+}
+});
+ </script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchMedicines();
+  });
+
+  function fetchMedicines() {
+    fetch("http://localhost:5000/api/medicine") 
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById("medicineContainer");
+        container.innerHTML = "";
+
+        data.forEach(medicine => {
+          const medicineCard = `
+            <div class="item">
+              <div class="box">
+                <div class="btn_container">
+                 
+                </div>
+                <div class="img-box">
+                  <img src="http://localhost:5000${medicine.Image}" alt="${medicine.MedicineName}">
+                </div>
+                <div class="detail-box">
+                  <div class="text">
+                    <h6>${medicine.MedicineName}</h6>
+                    <h6 class="price">
+                      <span>₹</span> ${medicine.Price}
+                    </h6>
+                  </div>
+                  <div class="button-group">
+                    <button onclick="updateMedicine('${medicine._id}')">Update</button>
+                    <button onclick="deleteMedicine('${medicine._id}')">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          container.innerHTML += medicineCard;
+        });
+      })
+      .catch(error => console.error("Error fetching medicine details:", error));
+  }
+
+  function updateMedicine(id) {
+    window.location.href = `update.html?id=${id}`;
+  }
+
+  function deleteMedicine(id) {
+    if (confirm("Are you sure you want to delete this medicine?")) {
+      fetch(`http://localhost:5000/api/medicine/${id}`, { method: "DELETE" })
+        .then(response => response.json())
+        .then(() => {
+          alert("Medicine deleted successfully!");
+          fetchMedicines();
+        })
+        .catch(error => console.error("Error deleting medicine:", error));
+    }
+  }
+</script>
+
+
+</body>
+
+</html>

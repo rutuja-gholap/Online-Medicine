@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Medicine</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+    <!-- Hover CSS -->
+    <link rel="stylesheet" href="css/hover-min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+
+ <!-- Register Section Start -->
+      <section class="login">
+        <div class="login-container">
+            <h2 class="text-center">Register</h2>
+            <div class="heading-border"></div>
+
+            <form id="register" class="form">
+                <fieldset>
+                    <legend>Register</legend>
+                    <p class="label">Username</p>
+                    <input type="text" id="username" required>
+                    <p class="label">Email</p>
+                    <input type="email" id="email"  required>
+
+                    <p class="label">Phone Number</p>
+                    <input type="tel" id="phoneNumber" required>
+
+                    <p class="label">Password</p>
+                    <input type="password" id="password" required>
+                    <button type="submit" class="btn-primary">Register</button>
+                    <p class="text-center">
+                        Already have an account? <a href="login.html" class="hvr-underline-from-center">Login</a>
+                    </p>
+                    
+                </fieldset>
+            </form>
+            
+        </div>
+    </section>
+    <!-- Register Section End -->
+
+
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- Jquery UI -->
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <!-- Custom JS -->
+    <script src="js/custom.js"></script>
+    
+
+    <script>
+      document.getElementById('register').addEventListener('submit', async function (event) {
+   event.preventDefault();
+
+   const username = document.getElementById('username').value;
+   const email = document.getElementById('email').value;
+   const phoneNumber = document.getElementById('phoneNumber').value;
+   const password = document.getElementById('password').value;
+
+   const data = {
+       Username: username,
+       Email: email,
+       PhoneNumber: phoneNumber,
+       Password: password,
+   };
+
+   try {
+       const response = await fetch('http://localhost:5000/api/register', {
+           method: 'POST',
+           headers: {
+               'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data),
+       });
+       
+       const result = await response.json();
+
+       if (response.status === 201) {
+           Swal.fire({
+               icon: 'success',
+               title: 'Registration Successful!',
+               text: result.message,
+               timer: 2000,
+               showConfirmButton: false
+           }).then(() => {
+               window.location.href = 'login.html';
+           });
+       } else {
+           Swal.fire({
+               icon: 'error',
+               title: 'Registration Failed!',
+               text: result.message || 'Please check your details and try again.',
+           });
+       }
+   } catch (error) {
+       console.error('Error:', error);
+       Swal.fire({
+           icon: 'error',
+           title: 'Oops!',
+           text: 'An error occurred during registration. Please try again later.',
+       });
+   }
+});
+
+     </script>
+     
+      
+</body>
+</html>

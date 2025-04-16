@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Medicine</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="css/font-awesome/css/font-awesome.css">
+    <!-- Hover CSS -->
+    <link rel="stylesheet" href="css/hover-min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+
+    <!-- Login Section Start -->
+    <section class="login">
+        <div class="login-container">
+            <h2 class="text-center">Login</h2>
+            <div class="heading-border"></div>
+
+            <form id="loginForm" class="form">
+                <fieldset>
+                    <legend>Login</legend>
+                    <p class="label">Email</p>
+                    <input type="email" id="Email" name="Email" required>
+                    <span id="emailError" class="error-message"></span>
+                    <p class="label">Password</p>
+                    <input type="password" id="Password" name="Password"  required>
+                    <span id="passwordError" class="error-message"></span> 
+                    <button type="submit" class="btn-primary">Login</button>
+                </fieldset>
+            </form>
+            <style>
+                .error-message {
+                    color: red;
+                    font-size: 12px;
+                    display: block;
+                    margin-bottom: 2px;
+                }
+            </style>
+        </div>
+    </section>
+    <!-- Login Section End -->
+
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- Jquery UI -->
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <!-- Custom JS -->
+    <script src="js/custom.js"></script>
+
+
+    <script>
+       document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    e.preventDefault(); 
+
+    document.getElementById('emailError').textContent = "";
+    document.getElementById('passwordError').textContent = "";
+
+    const Email = document.getElementById('Email').value;
+    const Password = document.getElementById('Password').value;
+
+    try {
+        const response = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ Email, Password }),
+        });
+
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            throw new Error('Unexpected response format');
+        }
+
+        if (response.ok) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful!',
+                text: data.message,
+                timer: 2000,
+                showConfirmButton: false
+            }).then(() => {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', Email);
+                window.location.href = 'index.html';
+            });
+        } else {
+            if (data.message.includes('email')) {
+                document.getElementById('emailError').textContent = data.message;
+            } else if (data.message.includes('password')) {
+                document.getElementById('passwordError').textContent = data.message;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed!',
+                    text: data.message || 'Invalid credentials, please try again.',
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again later.',
+        });
+    }
+});
+
+    </script>
+    
+    
+</body>
+</html>
